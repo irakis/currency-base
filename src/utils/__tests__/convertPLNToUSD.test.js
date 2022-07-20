@@ -8,8 +8,19 @@ describe('ConvertPLNtoUSD', () => {
     expect(convertPLNToUSD(12)).toBe('$3.43');
   })
   it('should return NaN vlaue when input is text',()=>{
-    expect(convertPLNToUSD('7')).toBeNaN(2);
-    expect(convertPLNToUSD('abc')).toBeNaN(NaN);
-    expect(convertPLNToUSD('-11')).toBeNaN(NaN);
+    expect(convertPLNToUSD('a7a')).toBeNaN();
+    expect(convertPLNToUSD('abc')).toBeNaN();
   })
-});
+  it('should return value of $0 when negative amount',()=> {
+    expect(convertPLNToUSD('-11')).toBe('$0.00');
+    expect(convertPLNToUSD('-121')).toBe('$0.00');
+  })
+  it('should return NaN when input is empty', () => {
+    expect(convertPLNToUSD()).toBeNaN();
+  });
+  it('should return Error when argument is not text and not number',()=> {
+    expect(convertPLNToUSD(function(){})).toBe('Error');
+    expect(convertPLNToUSD([])).toBe('Error');
+    expect(convertPLNToUSD(null)).toBe('Error');
+  })
+})
